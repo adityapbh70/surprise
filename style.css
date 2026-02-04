@@ -5,8 +5,10 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #ffe4e1;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Poppins', sans-serif;
     overflow: hidden;
+    /* Heart Cursor Effect */
+    cursor: url('https://cur.cursors-4u.net/symbols/sym-9/sym847.cur'), auto !important;
 }
 
 .card {
@@ -14,21 +16,23 @@ body {
     backdrop-filter: blur(10px);
     padding: 40px;
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(255, 77, 109, 0.2);
     text-align: center;
     border: 2px solid #ff4d6d;
     width: 350px;
     z-index: 10;
 }
 
-.emoji { font-size: 50px; }
-
-h1 { color: #ff4d6d; font-size: 24px; }
+h1 {
+    color: #ff4d6d;
+    font-size: 24px;
+    min-height: 60px; /* Text jump na kare isliye */
+}
 
 .btn-container {
     margin-top: 30px;
     position: relative;
-    height: 100px; /* Space for buttons to move */
+    height: 120px;
 }
 
 button {
@@ -38,27 +42,38 @@ button {
     border: none;
     cursor: pointer;
     position: absolute;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 #yesBtn {
     background-color: #ff4d6d;
     color: white;
-    left: 20%;
+    left: 10%;
+    box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
 }
 
 #noBtn {
     background-color: white;
     color: #ff4d6d;
     border: 1px solid #ff4d6d;
-    right: 20%;
+    right: 10%;
 }
 
-/* Floating Hearts Styling */
+/* Shake Animation */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    50% { transform: translateX(8px); }
+    100% { transform: translateX(0); }
+}
+
+.shake {
+    animation: shake 0.2s ease-in-out;
+}
+
 .heart {
     position: absolute;
     color: #ff4d6d;
-    font-size: 20px;
     animation: floatUp 4s linear infinite;
     bottom: -10%;
     z-index: 1;
@@ -68,5 +83,3 @@ button {
     0% { transform: translateY(0) rotate(0deg); opacity: 1; }
     100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
 }
-
-.footer-note { font-size: 12px; color: #888; margin-top: 15px; }

@@ -4,7 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surprise for Aditi ❤️</title>
-    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        /* CSS STYLE START */
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffe4e1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            /* Heart Cursor */
+            cursor: url('https://cur.cursors-4u.net/symbols/sym-9/sym847.cur'), auto !important;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
+            text-align: center;
+            border: 2px solid #ff4d6d;
+            width: 320px;
+            z-index: 10;
+            position: relative;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 26px;
+            min-height: 80px;
+        }
+
+        .btn-container {
+            margin-top: 20px;
+            position: relative;
+            height: 120px;
+            width: 100%;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            transition: all 0.2s ease;
+            font-weight: bold;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            left: 10%;
+            top: 20px;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        #noBtn {
+            background-color: white;
+            color: #ff4d6d;
+            border: 2px solid #ff4d6d;
+            right: 10%;
+            top: 20px;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            font-size: 20px;
+            animation: floatUp 4s linear infinite;
+            bottom: -10%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+        /* CSS STYLE END */
+    </style>
 </head>
 <body>
 
@@ -12,18 +95,94 @@
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="card" id="mainCard">
-        <div class="emoji">🐱❤️</div>
-        <h1>Aditi, Will you be my Valentine?</h1>
+    <div class="card">
+        <div style="font-size: 50px;">🐱❤️</div>
+        <h1 id="typing-text"></h1>
         
         <div class="btn-container">
             <button id="yesBtn" onclick="celebrate()">Yes 💖</button>
-            <button id="noBtn" onclick="handleNo()">No 🙈</button>
+            <button id="noBtn" onmouseover="handleNo()" onclick="handleNo()">No 🙈</button>
         </div>
-        
-        <p class="footer-note">Click anywhere to start the music! 🎶</p>
+        <p style="font-size: 12px; color: #888; margin-top: 15px;">Tap anywhere for music! 🎶</p>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        /* JAVASCRIPT START */
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const audio = document.getElementById('bgMusic');
+        const typingElement = document.getElementById('typing-text');
+
+        let moveCount = 0; // Moves count karega
+        const message = "Aditi, Will you be my Valentine? ❤️";
+        let charIndex = 0;
+
+        // 1. Typing Effect
+        function typeWriter() {
+            if (charIndex < message.length) {
+                typingElement.innerHTML += message.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        window.onload = typeWriter;
+
+        // 2. Music Trigger on first click
+        window.addEventListener('click', () => {
+            audio.play().catch(e => console.log("Music waiting for interaction"));
+        }, { once: true });
+
+        // 3. Floating Hearts Background
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }, 400);
+
+        // 4. Handle No Button Prank
+        function handleNo() {
+            moveCount++;
+
+            if (moveCount >= 4) {
+                // 4 moves ke baad gayab
+                noBtn.style.display = 'none';
+            } else {
+                // Random position logic
+                const x = Math.random() * (window.innerWidth - 120);
+                const y = Math.random() * (window.innerHeight - 60);
+                
+                noBtn.style.position = 'fixed';
+                noBtn.style.left = x + 'px';
+                noBtn.style.top = y + 'px';
+
+                // Yes button size increase
+                let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+                yesBtn.style.fontSize = (currentSize + 12) + "px";
+                yesBtn.style.padding = "15px 35px";
+            }
+        }
+
+        // 5. Success Celebration
+        function celebrate() {
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
+            document.body.innerHTML = `
+                <div style="text-align:center; background:white; padding:60px; border-radius:30px; border:5px solid #ff4d6d; box-shadow: 0 0 50px rgba(255,77,109,0.4);">
+                    <h1 style="font-size:80px; margin:0;">🥰❤️🎉</h1>
+                    <h1 style="color:#ff4d6d; font-size:45px; margin-top:20px;">I KNEW IT!<br>LOVE YOU ADITI!</h1>
+                    <p style="font-size:18px; color:#555;">Ready for our Valentine's date? ✨</p>
+                </div>`;
+            document.body.style.backgroundColor = "#ffb6c1";
+        }
+        /* JAVASCRIPT END */
+    </script>
 </body>
 </html>
