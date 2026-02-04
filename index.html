@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise!</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffe4e1;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 2px solid #ff4d6d;
+        }
+
+        .btn-container {
+            margin-top: 20px;
+            position: relative;
+            height: 50px;
+        }
+
+        button {
+            padding: 10px 25px;
+            font-size: 18px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: white;
+            color: #ff4d6d;
+            border: 1px solid #ff4d6d;
+            position: absolute;
+            left: 55%; /* Shuruati position */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>Aditi, Will you be my Valentine? 🐱</h1>
+        <div class="btn-container">
+            <button id="yesBtn" onclick="celebrate()">Yes 💖</button>
+            <button id="noBtn" onclick="handleNo()">No 🙈</button>
+        </div>
+    </div>
+
+    <script>
+        let clickCount = 0;
+        const noBtn = document.getElementById('noBtn');
+
+        function handleNo() {
+            clickCount++;
+
+            if (clickCount === 1) {
+                // Pehli baar: Right mein bhagega
+                noBtn.style.left = "80%";
+                noBtn.innerText = "Are you sure? 🤨";
+            } 
+            else if (clickCount === 2) {
+                // Doosri baar: Left mein bhagega
+                noBtn.style.left = "-30%";
+                noBtn.innerText = "Ek baar aur socho! 🥺";
+            } 
+            else if (clickCount === 3) {
+                // Teesri baar: Phir Right mein
+                noBtn.style.left = "90%";
+                noBtn.innerText = "Pakka? 😢";
+            } 
+            else {
+                // Chauthi baar: Gayab ho jayega!
+                noBtn.style.display = "none";
+                
+            }
+        }
+
+        function celebrate() {
+            document.body.innerHTML = `
+                <div style="text-align:center;">
+                    <h1 style="font-size:50px; color:#ff4d6d;">Yaaay! ❤️🎉</h1>
+                    <p style="font-size:24px;">I knew it!</p>
+                </div>`;
+            document.body.style.backgroundColor = "white";
+        }
+    </script>
+
+</body>
+</html>
